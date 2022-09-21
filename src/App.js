@@ -1,17 +1,16 @@
-import logo from './logo.svg';
+import logo from './assets/reciflex-logo.png';
 import './App.css';
 import * as React from 'react';
-import { Box, Paper, TextField, CssBaseline, Typography } from '@mui/material';
+import { Box, Paper, TextField, CssBaseline, Typography, Link } from '@mui/material';
 
 function App() {
   return (
-    <Box className="App">
-      <CssBaseline>
+    <CssBaseline>
+      <Box className="App">
         <Box
+          className="flex-column"
           component="form"
           sx={{
-            display: 'flex',
-            flexDirection: 'column',
             flexWrap: 'wrap',
             '& > :not(style)': {
               m: 1,
@@ -20,22 +19,30 @@ function App() {
             },
           }}>
           <Paper elevation={8}>
-
-            <Box sx={{ display: 'flex' }}>
+            <Link
+              className="flex-column"
+              href="https://github.com/ismaelzaccah/reciflex"
+              draggable="false"
+              target="_blank"
+              m={2}
+              sx={{ textDecoration: 'none' }}
+            >
               <Box sx={{ display: 'flex' }}>
-                <img src={logo} alt="Reciflex 2 logo" width={200} />
-                <Typography variant='subtitle1'>2.0</Typography>
+                <img src={logo} alt="Reciflex 2 logo" width={300} draggable="false" />
+                <Typography variant='subtitle1' sx={{ position: 'absolute', ml: 38 }}>2.0</Typography>
               </Box>
+              <Typography variant='subtitle1'>Desenvolvido por Ismael Zaccah</Typography>
+            </Link>
 
-              <Typography>Desenvolvido por Ismael Zaccah</Typography>
+            <Box className="flex-column" m={2}>
+              <TextField id="clientName" label="Cliente" fullWidth margin='normal'/>
+              <TextField id="clientName" label="Cliente" fullWidth margin='normal'/>
+              <TextField id="clientName" label="Cliente" fullWidth margin='normal' multiline rows={6} />
             </Box>
-
-            <TextField fullWidth />
           </Paper>
         </Box>
-      </CssBaseline>
-
-    </Box>
+      </Box>
+    </CssBaseline>
 
   );
 }

@@ -8,3 +8,8 @@
   font-size: calc(10px + 2vmin);
   color: white;
 }
+.flex-column{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
