@@ -1,3 +1,7 @@
+import '@fontsource/roboto/300.css';
+import '@fontsource/roboto/400.css';
+import '@fontsource/roboto/500.css';
+import '@fontsource/roboto/700.css';
 import logo from './assets/reciflex-logo.png';
 import './App.css';
 import * as React from 'react';
@@ -7,7 +11,7 @@ function App() {
   return (
     <CssBaseline>
       <Box
-        className="flex-column App"
+        className="flex column-center App"
         component="form"
         sx={{
           flexWrap: 'wrap',
@@ -20,7 +24,7 @@ function App() {
           elevation={8}
           sx={{ justifyContent: 'center' }}>
           <Link
-            className="flex-column"
+            className="flex column-center"
             href="https://github.com/ismaelzaccah/reciflex"
             draggable="false"
             target="_blank"
@@ -40,14 +44,28 @@ function App() {
 
           <Box m={2}>
             <Grid container spacing={2}>
-              <Grid item xs={8}>
-                <TextField id="clientName" label="Cliente" fullWidth margin='normal' />
+              <Grid item xs={10}>
+                <TextField
+                  id="clientName"
+                  label="Cliente"
+                  fullWidth
+                  required />
               </Grid>
-              <Grid item xs={4}>
-                <TextField id="value" label="Valor" fullWidth margin='normal' />
+              <Grid item xs={2}>
+                <TextField
+                  id="value"
+                  label="Valor"
+                  fullWidth
+                  required />
               </Grid>
               <Grid item xs={12}>
-                <TextField id="description" label="Referente a" fullWidth margin='normal' multiline rows={6} />
+                <TextField
+                  id="description"
+                  label="Referente a"
+                  fullWidth
+                  required
+                  multiline
+                  rows={6} />
               </Grid>
             </Grid>
           </Box>
