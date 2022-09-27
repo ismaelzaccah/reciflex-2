@@ -5,9 +5,15 @@ import '@fontsource/roboto/700.css';
 import logo from './assets/reciflex-logo.png';
 import './App.css';
 import * as React from 'react';
-import { Box, Paper, TextField, CssBaseline, Typography, Link, Grid } from '@mui/material';
+import { Box, Paper, TextField, CssBaseline, Typography, Link, Grid, Checkbox, FormControlLabel } from '@mui/material';
 
 function App() {
+  const [todayChecked, setTodayChecked] = React.useState(true);
+
+  const handleChange = (event) => {
+    setTodayChecked(event.target.checked);
+  };
+
   return (
     <CssBaseline>
       <Box
@@ -66,6 +72,22 @@ function App() {
                   required
                   multiline
                   rows={6} />
+              </Grid>
+              <Grid item xs={6}>
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      id="today"
+                      checked={todayChecked}
+                      onChange={handleChange}
+                      inputProps={{ 'aria-label': 'controlled' }} />
+                  } label="Usar data de Hoje" />
+                <TextField
+                  type="date"
+                  id="date"
+                  label="Data"
+                />
+
               </Grid>
             </Grid>
           </Box>
