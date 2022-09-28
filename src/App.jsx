@@ -5,7 +5,7 @@ import '@fontsource/roboto/700.css';
 import logo from './assets/reciflex-logo.png';
 import './App.css';
 import * as React from 'react';
-import { Box, Paper, TextField, CssBaseline, Typography, Link, Grid, FormControlLabel, Switch } from '@mui/material';
+import { Box, Paper, TextField, CssBaseline, Typography, Link, Grid, FormControlLabel, Switch, RadioGroup, Radio } from '@mui/material';
 
 function App() {
   const [todayChecked, setTodayChecked] = React.useState(true);
@@ -79,10 +79,9 @@ function App() {
                     <Switch
                       id="today"
                       checked={todayChecked}
-                      onChange={handleChange}
-                      inputProps={{ 'aria-label': 'controlled' }} />
+                      onChange={handleChange} />
                   } label="Usar data de Hoje" />
-                <Grid item>
+                <Grid item xs={6}>
                   <TextField
                     type="date"
                     id="date"
@@ -93,7 +92,31 @@ function App() {
                 </Grid>
               </Grid>
               <Grid item xs={8}>
-
+                <RadioGroup
+                  id="signature"
+                  name="signature"
+                >
+                  <FormControlLabel
+                    value="signature1"
+                    control={<Radio />}
+                    label={process.env.REACT_APP_SIGNATURE_1_OWNER}
+                  />
+                  <FormControlLabel
+                    value="signature2"
+                    control={<Radio />}
+                    label={process.env.REACT_APP_SIGNATURE_2_OWNER}
+                  />
+                  <FormControlLabel
+                    value="signature3"
+                    control={<Radio />}
+                    label={process.env.REACT_APP_SIGNATURE_3_OWNER}
+                  />
+                  <FormControlLabel
+                    value="signature4"
+                    control={<Radio />}
+                    label={process.env.REACT_APP_SIGNATURE_4_OWNER}
+                  />
+                </RadioGroup>
               </Grid>
             </Grid>
           </Box>
