@@ -1,5 +1,9 @@
+# 🚧 EM CONSTRUÇÃO 🚧
+<!-- 
+
 # Olá, bem-vindo ao Reciflex 2
 ## Para configura-lo com dados da sua empresa e implementa-lo siga  os passos a seguir: 
+
 
 1. Inserir os Dados da sua empresa:
     - Localize o arquivo `.env-sample` na raiz do projeto;
@@ -25,3 +29,4 @@
     ```
     - Save como um novo arquivo chamado de `.env` na mesma pasta;
 
+ -->
