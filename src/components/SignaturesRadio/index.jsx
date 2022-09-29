@@ -1,6 +1,6 @@
 import { FormControlLabel, Radio, Stack } from "@mui/material";
 
-const signaturesRadio = () => {
+const SignaturesRadio = () => {
   const signature1 = process.env.REACT_APP_SIGNATURE_1_OWNER;
   const signature2 = process.env.REACT_APP_SIGNATURE_2_OWNER;
   const signature3 = process.env.REACT_APP_SIGNATURE_3_OWNER;
@@ -32,4 +32,4 @@ const signaturesRadio = () => {
   )
 }
 
-export default signaturesRadio;
+export default SignaturesRadio;

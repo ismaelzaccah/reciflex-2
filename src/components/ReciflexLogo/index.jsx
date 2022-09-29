@@ -2,7 +2,7 @@ import { Box } from '@mui/system';
 import { Link, Typography } from '@mui/material';
 import logo from '../../assets/reciflex-logo.png';
 
-const reciflexLogo = () => {
+const ReciflexLogo = () => {
   return (
     <Link
       className="flex column-center"
@@ -25,4 +25,4 @@ const reciflexLogo = () => {
   )
 }
 
-export default reciflexLogo;
+export default ReciflexLogo;
