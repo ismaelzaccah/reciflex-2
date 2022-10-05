@@ -5,17 +5,21 @@ import '@fontsource/roboto/700.css';
 import './index.css';
 import * as React from 'react';
 import { Box, Paper, TextField, Grid, FormControlLabel, Switch, Button, Divider, RadioGroup, Radio } from '@mui/material';
-import ReciflexLogo from '../../components/ReciflexLogo';
-import SignaturesRadio from '../../components/SignaturesRadio';
 import { Stack } from '@mui/system';
+import ReciflexLogo from '../../components/ReciflexLogo';
+import company from '../../config';
 
 const Home = () => {
-  const signature1 = process.env.REACT_APP_SIGNATURE_1_OWNER;
-  const signature2 = process.env.REACT_APP_SIGNATURE_2_OWNER;
-  const signature3 = process.env.REACT_APP_SIGNATURE_3_OWNER;
-  const signature4 = process.env.REACT_APP_SIGNATURE_4_OWNER;
 
-  const [formValues, setFormValues] = React.useState({});
+  const [formValues, setFormValues] = React.useState({
+    clientName: "",
+    receiptValue: "",
+    description: "",
+    useTodayDate: "on",
+    date: "",
+    includeCNPJ: "off",
+    signature: "",
+  });
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -29,8 +33,7 @@ const Home = () => {
     console.log(data);
   }
   console.log(formValues);
-
-  const [todayChecked, setTodayChecked] = React.useState(true);
+  const { signature } = company;
 
   return (
     <Box
@@ -93,59 +96,61 @@ const Home = () => {
                   onChange={handleChange}
                   label="Data"
                   InputLabelProps={{ shrink: true }}
-                  disabled={todayChecked}
+                  disabled={formValues.useTodayDate === "on"}
                 />
                 <FormControlLabel
                   control={
                     <Switch
-                      id="today"
-                      name="today"
-                      checked={todayChecked}
-                      onChange={event => setTodayChecked(event.target.checked)} />
-                  } label="Usar data de Hoje" />
+                      id="useTodayDate"
+                      name="useTodayDate"
+                      value={formValues.useTodayDate}
+                      checked={formValues.useTodayDate === "on"}
+                      onChange={handleChange}
+                    />}
+                  label="Usar data de Hoje" />
                 <FormControlLabel
                   control={
-                    <Switch id="includeCNPJ" name="includeCNPJ"
-                      value={formValues.CNPJ || ""}
-                      onChange={handleChange} />}
+                    <Switch
+                      id="includeCNPJ"
+                      name="includeCNPJ"
+                      value={formValues.includeCNPJ}
+                      checked={formValues.includeCNPJ === "on"}
+                      onChange={handleChange}
+                    />}
                   label="Incluir CNPJ"
-
                 />
               </Stack>
             </Grid>
           </Grid>
           <Grid item xs={12} mt={2}>
             <Divider>Assinatura</Divider>
-            <RadioGroup className='flex row-center'
+            <RadioGroup
+              className='flex row-center'
               name="signature"
               row>
               <FormControlLabel
                 value={1}
                 onChange={handleChange}
-                checked={formValues.signature === 1}
                 control={<Radio />}
-                label={signature1}
+                label={signature[1]}
               />
               <FormControlLabel
                 value={2}
                 onChange={handleChange}
-                checked={formValues.signature === 2}
                 control={<Radio />}
-                label={signature2}
+                label={signature[2]}
               />
               <FormControlLabel
                 value={3}
                 onChange={handleChange}
-                checked={formValues.signature === 3}
                 control={<Radio />}
-                label={signature3}
+                label={signature[3]}
               />
               <FormControlLabel
                 value={4}
                 onChange={handleChange}
-                checked={formValues.signature === 4}
                 control={<Radio />}
-                label={signature4}
+                label={signature[4]}
               />
             </RadioGroup>
           </Grid>
