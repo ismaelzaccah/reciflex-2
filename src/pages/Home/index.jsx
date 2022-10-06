@@ -15,15 +15,19 @@ const Home = () => {
     clientName: "",
     receiptValue: "",
     description: "",
-    useTodayDate: "on",
+    useTodayDate: true,
     date: "",
-    includeCNPJ: "off",
+    includeCNPJ: false,
     signature: "",
   });
 
   const handleChange = (event) => {
-    const { name, value } = event.target;
-    setFormValues({ ...formValues, [name]: value });
+    const { name, value, type, checked } = event.target;
+    if(type === 'checkbox'){
+      setFormValues({ ...formValues, [name]: checked });
+    }else{
+      setFormValues({ ...formValues, [name]: value });
+    }
   }
 
   const handleSubmit = (event) => {
@@ -32,7 +36,7 @@ const Home = () => {
     const data = Object.fromEntries(formData);
     console.log(data);
   }
-  console.log(formValues);
+  
   const { signature } = company;
 
   return (
@@ -96,27 +100,23 @@ const Home = () => {
                   onChange={handleChange}
                   label="Data"
                   InputLabelProps={{ shrink: true }}
-                  disabled={formValues.useTodayDate === "on"}
+                  disabled={formValues.useTodayDate === true}
                 />
                 <FormControlLabel
                   control={
                     <Switch
                       id="useTodayDate"
                       name="useTodayDate"
-                      value={formValues.useTodayDate}
-                      checked={formValues.useTodayDate === "on"}
+                      checked={formValues.useTodayDate}
                       onChange={handleChange}
                     />}
                   label="Usar data de Hoje" />
                 <FormControlLabel
-                  control={
-                    <Switch
-                      id="includeCNPJ"
-                      name="includeCNPJ"
-                      value={formValues.includeCNPJ}
-                      checked={formValues.includeCNPJ === "on"}
-                      onChange={handleChange}
-                    />}
+                  control={<Switch
+                    name="includeCNPJ"
+                    onChange={handleChange}
+                    checked={formValues.includeCNPJ}
+                  />}
                   label="Incluir CNPJ"
                 />
               </Stack>
@@ -126,6 +126,7 @@ const Home = () => {
             <Divider>Assinatura</Divider>
             <RadioGroup
               className='flex row-center'
+              id="signature"
               name="signature"
               row>
               <FormControlLabel
@@ -161,7 +162,6 @@ const Home = () => {
             </Stack>
           </Grid>
         </Box>
-
       </Paper>
     </Box>
 
