@@ -4,12 +4,36 @@ import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 import './index.css';
 import * as React from 'react';
-import { Box, Paper, TextField, Grid, FormControlLabel, Switch, Button, Divider, RadioGroup, Radio } from '@mui/material';
+import { Box, Paper, TextField, Grid, FormControlLabel, Switch, Button, Divider, RadioGroup, Radio, Modal } from '@mui/material';
 import { Stack } from '@mui/system';
 import ReciflexLogo from '../../components/ReciflexLogo';
 import company from '../../config';
+import GeneratedReceipt from '../../components/GeneratedReceiptModal';
 
 const Home = () => {
+
+  const { signature } = company;
+
+  const [openGeneratedReceipt, setOpenGeneratedReceipt] = React.useState(false);
+  const handleOpenGeneratedReceipt = () => setOpenGeneratedReceipt(true);
+  const handleCloseGeneratedReceipt = () => setOpenGeneratedReceipt(false);
+
+  const handleChange = (event) => {
+    const { name, value, type, checked } = event.target;
+    if (type === 'checkbox') {
+      setFormValues({ ...formValues, [name]: checked });
+    } else {
+      setFormValues({ ...formValues, [name]: value });
+    }
+  }
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const formData = new FormData(event.target);
+    const data = Object.fromEntries(formData);
+    handleOpenGeneratedReceipt();
+    console.log(data);
+  }
 
   const [formValues, setFormValues] = React.useState({
     clientName: "",
@@ -20,24 +44,6 @@ const Home = () => {
     includeCNPJ: false,
     signature: "",
   });
-
-  const handleChange = (event) => {
-    const { name, value, type, checked } = event.target;
-    if(type === 'checkbox'){
-      setFormValues({ ...formValues, [name]: checked });
-    }else{
-      setFormValues({ ...formValues, [name]: value });
-    }
-  }
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const formData = new FormData(event.target);
-    const data = Object.fromEntries(formData);
-    console.log(data);
-  }
-  
-  const { signature } = company;
 
   return (
     <Box
@@ -159,10 +165,28 @@ const Home = () => {
             <Stack spacing={2} direction="row" justifyContent="center">
               <Button variant='contained' type='reset'>Limpar Campos</Button>
               <Button variant='contained' type='submit'>Gerar Recibo</Button>
+
+              <Button //FIXME - Delete after make modal
+                variant='contained'
+                onClick={handleOpenGeneratedReceipt}
+              >
+                OPEN MODAL
+              </Button>
+
             </Stack>
           </Grid>
         </Box>
       </Paper>
+
+      <Modal
+        open={openGeneratedReceipt}
+        onClose={handleCloseGeneratedReceipt}
+      >
+        <Box>
+          <GeneratedReceipt/>
+        </Box>
+      </Modal>
+      
     </Box>
 
   );
