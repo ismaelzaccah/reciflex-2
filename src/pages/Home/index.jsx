@@ -14,6 +14,16 @@ const Home = () => {
 
   const { signature } = company;
 
+  const [formValues, setFormValues] = React.useState({
+    clientName: "",
+    receiptValue: "",
+    description: "",
+    useTodayDate: true,
+    date: "",
+    includeCNPJ: false,
+    signature: "",
+  });
+
   const [openGeneratedReceipt, setOpenGeneratedReceipt] = React.useState(false);
   const handleOpenGeneratedReceipt = () => setOpenGeneratedReceipt(true);
   const handleCloseGeneratedReceipt = () => setOpenGeneratedReceipt(false);
@@ -29,21 +39,9 @@ const Home = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    const formData = new FormData(event.target);
-    const data = Object.fromEntries(formData);
     handleOpenGeneratedReceipt();
-    console.log(data);
+    console.log(formValues);
   }
-
-  const [formValues, setFormValues] = React.useState({
-    clientName: "",
-    receiptValue: "",
-    description: "",
-    useTodayDate: true,
-    date: "",
-    includeCNPJ: false,
-    signature: "",
-  });
 
   return (
     <Box
@@ -183,10 +181,10 @@ const Home = () => {
         onClose={handleCloseGeneratedReceipt}
       >
         <Box>
-          <GeneratedReceipt/>
+          <GeneratedReceipt />
         </Box>
       </Modal>
-      
+
     </Box>
 
   );
