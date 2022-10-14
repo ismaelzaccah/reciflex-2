@@ -7,12 +7,13 @@ const ReciflexLogo = () => {
     <Link
       className="flex column-center"
       href="https://github.com/ismaelzaccah/reciflex-2"
+      underline='none'
+      color='inherit'
       draggable="false"
       target="_blank"
       my={4}
       mx="auto"
       width={380}
-      sx={{ textDecoration: 'none' }}
     >
       <Box sx={{ display: 'flex' }}>
         <img src={logo} alt="Reciflex 2 logo" width={300} draggable="false" />
