@@ -1,4 +1,4 @@
-import { Box, Typography } from "@mui/material"
+import { Box, Link, Typography } from "@mui/material"
 import { Stack } from "@mui/system";
 import companyLogo from "../../assets/logo.png"
 import company from "../../config";
@@ -15,6 +15,8 @@ const style = {
 };
 
 const GeneratedReceiptModal = () => { //FIXME - Insert props
+  const { companyName, cnpj, contact, adress, signature } = company;
+
   const props = {
     clientName: "Ismael Zaccah da Silva Vieira",
     receiptValue: "1123,58",
@@ -25,14 +27,23 @@ const GeneratedReceiptModal = () => { //FIXME - Insert props
     signature: "3",
   }
 
-  company.companyName = ""; //FIXME - remove after tests
-
   return (
     <Box sx={style}>
+
+      <Link
+        href="https://github.com/ismaelzaccah/reciflex-2"
+        underline='none'
+        color='inherit'
+        draggable="false"
+        target="_blank"
+      >
+        Gerado pelo Reciflex 2.0 - Desenvolvido por Ismael Zaccah
+      </Link>
       <Stack
         spacing={2}
         direction='row'
         justifyContent='space-around'
+        my={4}
       >
         <img
           src={companyLogo}
@@ -42,15 +53,19 @@ const GeneratedReceiptModal = () => { //FIXME - Insert props
         />
         <Stack
           spacing={2}
-          direction='row'
+          direction='column'
           justifyContent='space-around'
         >
           <Typography>
-            {company.companyName.toUpperCase() || "Nome da empresa não configurado"}
-          </Typography>
-          <Typography>
-            {props.includeCNPJ && (company.cnpj || "CNPJ não configurado")}
+            {companyName.toUpperCase() || "Nome da empresa não configurado"}
             <br />
+            {props.includeCNPJ && (cnpj || "CNPJ não configurado")}
+            <br />
+            {contact[1] || "Contato 1 não configurado"}
+            <br />
+            {contact[2] || "Contato 2 não configurado"}
+            <br />
+
           </Typography>
 
         </Stack>
