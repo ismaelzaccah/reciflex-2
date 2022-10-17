@@ -8,7 +8,7 @@ const style = {
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  // width: 400,
+  width: 1000,
   bgcolor: 'background.paper',
   boxShadow: 24,
   p: 4,
@@ -30,15 +30,13 @@ const GeneratedReceiptModal = () => { //FIXME - Insert props
   return (
     <Box sx={style}>
 
-      <Link
-        href="https://github.com/ismaelzaccah/reciflex-2"
-        underline='none'
-        color='inherit'
-        draggable="false"
-        target="_blank"
+      <Typography
+        variant="body2"
+        textAlign='center'
       >
-        Gerado pelo Reciflex 2.0 - Desenvolvido por Ismael Zaccah
-      </Link>
+        Documento Gerado pelo Reciflex 2.0 - Desenvolvido por Ismael Zaccah
+      </Typography>
+
       <Stack
         spacing={2}
         direction='row'
@@ -51,25 +49,52 @@ const GeneratedReceiptModal = () => { //FIXME - Insert props
           width={200}
           draggable={false}
         />
-        <Stack
-          spacing={2}
-          direction='column'
-          justifyContent='space-around'
+        <Typography>
+          {companyName.toUpperCase() || "Nome da empresa não configurado"}
+          {" - "}
+          {props.includeCNPJ && (cnpj || " - CNPJ não configurado")}
+          <br />
+          {contact[1] || "Contato 1 não configurado"}
+          <br />
+          {contact[2] || "Contato 2 não configurado"}
+          <br />
+          {adress.street || "Logradouro não configurado"}
+          {" "}
+          {adress.number || " - Numero não configurado"}
+          {" "}
+          {adress.complement}
+          <br />
+          {adress.district || "Bairro não configurado"}
+          {" - "}
+          {adress.city || "Cidade não configurada"}
+          {" - "}
+          {adress.acronym || "Cidade não configurada"}
+        </Typography>
+
+        <Typography
+          fontSize={40}
+          fontWeight={600}
         >
-          <Typography>
-            {companyName.toUpperCase() || "Nome da empresa não configurado"}
-            <br />
-            {props.includeCNPJ && (cnpj || "CNPJ não configurado")}
-            <br />
-            {contact[1] || "Contato 1 não configurado"}
-            <br />
-            {contact[2] || "Contato 2 não configurado"}
-            <br />
-
-          </Typography>
-
-        </Stack>
+          R$ {props.receiptValue}
+        </Typography>
       </Stack>
+
+      <Typography>
+        Recebemos de <b>{props.clientName}</b> a quantia de <b>{props.receiptValue}</b> referente a <b>{props.description}</b> pelo que firmamos o presente recibo.
+      </Typography>
+
+      <Stack
+        spacing={2}
+        direction='row'
+        justifyContent='space-around'
+        my={4}
+      >
+    
+    {adress.city}, {props.date}
+    {' - '}
+    {signature[props.signature]}
+      </Stack>
+
     </Box>
   )
 }
