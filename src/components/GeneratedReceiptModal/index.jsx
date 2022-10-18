@@ -1,7 +1,9 @@
-import { Box, Link, Typography } from "@mui/material"
+import { Box, Button, Typography } from "@mui/material"
 import { Stack } from "@mui/system";
 import companyLogo from "../../assets/logo.png"
 import company from "../../config";
+import '../../utils/extenso'
+import SignatureImage from "../SignatureImage";
 
 const style = {
   position: 'absolute',
@@ -22,14 +24,29 @@ const GeneratedReceiptModal = () => { //FIXME - Insert props
     receiptValue: "1123,58",
     description: "serviços graficos e etc",
     useTodayDate: true,
-    date: "2022-10-12",
+    date: "2022-5-30",
     includeCNPJ: true,
-    signature: "3",
+    signature: "1",
+  }
+  const dateInFull = () => {
+    const monthInFull = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
+    if (props.useTodayDate) {
+      const today = new Date();
+      return `${today.getDate()} de ${monthInFull[today.getMonth()]} de ${today.getFullYear()}`;
+    }
+    let dateSplited = props.date.split("-");
+    return `${dateSplited[2]} de ${monthInFull[--dateSplited[1]]} de ${dateSplited[0]}`;
+  }
+
+  const signatureSpace = () => {
+    if (props.signature) {
+      return <img src={SignatureImage(props.signature)} alt="Assinatura" width={250} />
+    }
+    return <Box width={250} height={70} />
   }
 
   return (
     <Box sx={style}>
-
       <Typography
         variant="body2"
         textAlign='center'
@@ -41,6 +58,7 @@ const GeneratedReceiptModal = () => { //FIXME - Insert props
         spacing={2}
         direction='row'
         justifyContent='space-around'
+        alignItems='center'
         my={4}
       >
         <img
@@ -72,27 +90,78 @@ const GeneratedReceiptModal = () => { //FIXME - Insert props
         </Typography>
 
         <Typography
+          variant="h1"
+          component="h2"
           fontSize={40}
-          fontWeight={600}
+          fontWeight="bold"
         >
           R$ {props.receiptValue}
         </Typography>
       </Stack>
 
-      <Typography>
-        Recebemos de <b>{props.clientName}</b> a quantia de <b>{props.receiptValue}</b> referente a <b>{props.description}</b> pelo que firmamos o presente recibo.
+      <Typography
+        variant="h1"
+        textAlign="center"
+        fontWeight="bold"
+        fontSize={40}
+        my={4}
+      >
+        RECIBO
+      </Typography>
+
+      <Typography
+        fontSize={25}
+        sx={{ textIndent: 40 }}
+      >
+        Recebemos de <b>{props.clientName}</b> a quantia de <b>{props.receiptValue.extenso(true)}</b> referente a <b>{props.description}</b> pelo que firmamos o presente recibo.
       </Typography>
 
       <Stack
         spacing={2}
         direction='row'
         justifyContent='space-around'
-        my={4}
+        alignItems='baseline'
+        textAlign="center"
+        mt={2}
       >
-    
-    {adress.city}, {props.date}
-    {' - '}
-    {signature[props.signature]}
+        <Typography>
+          {company.adress.city + ", " + dateInFull()}
+        </Typography>
+
+        <Box>
+          {signatureSpace()}
+          <Typography
+            borderTop={1}
+            width={300}>
+            {signature[props.signature] || "Assinatura"}
+          </Typography>
+        </Box>
+      </Stack>
+      <Stack
+        spacing={2}
+        direction='row'
+        justifyContent='center'
+        mt={4}
+      >
+        <Button
+          variant="contained"
+          onClick={()=> console.log("GERAR NOVO")}
+          >
+          Gerar Novo
+        </Button>
+        <Button
+          variant="contained"
+          onClick={()=> console.log("IMPRIMIR")}
+          >
+          Imprimir
+        </Button>
+        <Button
+          variant="contained"
+          onClick={()=> console.log("CAPTURAR")}
+          >
+          Capturar
+        </Button>
+
       </Stack>
 
     </Box>

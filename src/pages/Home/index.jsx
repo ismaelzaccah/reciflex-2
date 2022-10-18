@@ -1,7 +1,3 @@
-import '@fontsource/roboto/300.css';
-import '@fontsource/roboto/400.css';
-import '@fontsource/roboto/500.css';
-import '@fontsource/roboto/700.css';
 import './index.css';
 import * as React from 'react';
 import { Box, Paper, TextField, Grid, FormControlLabel, Switch, Button, Divider, RadioGroup, Radio, Modal } from '@mui/material';
@@ -21,7 +17,7 @@ const Home = () => {
     useTodayDate: true,
     date: "",
     includeCNPJ: false,
-    signature: "",
+    signature: "2",
   });
 
   const [openGeneratedReceipt, setOpenGeneratedReceipt] = React.useState(false);
