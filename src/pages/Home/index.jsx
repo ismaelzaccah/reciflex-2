@@ -17,7 +17,7 @@ const Home = () => {
     useTodayDate: true,
     date: "",
     includeCNPJ: false,
-    signature: "2",
+    signature: "",
   });
 
   const [openGeneratedReceipt, setOpenGeneratedReceipt] = React.useState(false);
@@ -39,11 +39,23 @@ const Home = () => {
     console.log(formValues);
   }
 
+  const hadleReset = (event) => {
+    setFormValues({
+      clientName: "",
+      receiptValue: "",
+      description: "",
+      useTodayDate: true,
+      date: "",
+      includeCNPJ: false,
+      signature: "",
+    });
+  }
   return (
     <Box
       className="flex column-center App"
       component="form"
       onSubmit={handleSubmit}
+      onReset={hadleReset}
       sx={{
         flexWrap: 'wrap',
         '& > :not(style)': {
@@ -128,6 +140,7 @@ const Home = () => {
               className='flex row-center'
               id="signature"
               name="signature"
+              value={formValues.signature}
               row>
               <FormControlLabel
                 value={1}
