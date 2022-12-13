@@ -2,6 +2,7 @@ import { Box, Button, Typography } from "@mui/material"
 import { Stack } from "@mui/system";
 import html2canvas from "html2canvas";
 import * as React from "react";
+import { useReactToPrint } from "react-to-print";
 import companyLogo from "../../assets/logo.png"
 import company from "../../config";
 import '../../utils/extenso'
@@ -12,16 +13,16 @@ const style = {
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  width: 1000,
+  width: 780,
   bgcolor: 'background.paper',
   boxShadow: 24,
-  pb: 4,
-};
+  pb: 2,
+}
 
 const GeneratedReceiptModal = () => { //FIXME - Insert props
   const { companyName, cnpj, contact, adress, signature } = company;
 
-  const props = {
+  const props = { //FIXME - remove after insert props
     clientName: "Ismael Zaccah da Silva Vieira",
     receiptValue: "1123,58",
     description: "serviços graficos e etc",
@@ -30,6 +31,7 @@ const GeneratedReceiptModal = () => { //FIXME - Insert props
     includeCNPJ: true,
     signature: "1",
   }
+
   const dateInFull = () => {
     const monthInFull = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
     if (props.useTodayDate) {
@@ -42,16 +44,16 @@ const GeneratedReceiptModal = () => { //FIXME - Insert props
 
   const signatureSpace = () => {
     if (props.signature) {
-      return <img src={SignatureImage(props.signature)} alt="Assinatura" width={250} />
+      return <img src={SignatureImage(props.signature)} alt="Assinatura" width={170} />
     }
-    return <Box width={250} height={70} />
+    return <Box width={170} height={70} />
   }
 
-  const contentToScreenshot = React.useRef();
+  const contentToPrintRef = React.useRef();
 
   const handleScreenshot = async () => {
-    const element = contentToScreenshot.current;
-    const canvas = await html2canvas(element, {scale: 2});
+    const element = contentToPrintRef.current;
+    const canvas = await html2canvas(element, { scale: 2 });
     const data = canvas.toDataURL('image/png');
     const link = document.createElement('a');
     if (typeof link.download === 'string') {
@@ -65,18 +67,23 @@ const GeneratedReceiptModal = () => { //FIXME - Insert props
     }
   }
 
+  const handlePrint = useReactToPrint({
+    content: () => contentToPrintRef.current,
+  });
+
+
   return (
     <Box sx={style}>
-      <Box p={4} ref={contentToScreenshot}>
+      <Box py={2} px={4} ref={contentToPrintRef}>
         <Typography
           variant="body2"
           textAlign='center'
+          fontSize={8}
         >
           Documento Gerado pelo Reciflex 2.0 - Desenvolvido por Ismael Zaccah
         </Typography>
 
         <Stack
-          spacing={2}
           direction='row'
           justifyContent='space-around'
           alignItems='center'
@@ -85,10 +92,10 @@ const GeneratedReceiptModal = () => { //FIXME - Insert props
           <img
             src={companyLogo}
             alt={company.companyName}
-            width={200}
+            width={150}
             draggable={false}
           />
-          <Typography>
+          <Typography fontSize={12}>
             {companyName.toUpperCase() || "Nome da empresa não configurado"}
             {" - "}
             {props.includeCNPJ && (cnpj || " - CNPJ não configurado")}
@@ -113,7 +120,7 @@ const GeneratedReceiptModal = () => { //FIXME - Insert props
           <Typography
             variant="h1"
             component="h2"
-            fontSize={40}
+            fontSize={28}
             fontWeight="bold"
           >
             R$ {props.receiptValue}
@@ -124,16 +131,16 @@ const GeneratedReceiptModal = () => { //FIXME - Insert props
           variant="h1"
           textAlign="center"
           fontWeight="bold"
-          fontSize={40}
-          my={4}
+          fontSize={28}
+          my={2}
         >
           RECIBO
         </Typography>
 
         <Typography
-          fontSize={25}
+          fontSize={18}
           textAlign={"justify"}
-          sx={{ textIndent: 40 }}
+          sx={{ textIndent: 50 }}
         >
           Recebemos de <b>{props.clientName}</b> a quantia de <b>{props.receiptValue.extenso(true)}</b> referente a <b>{props.description}</b> pelo que firmamos o presente recibo.
         </Typography>
@@ -144,9 +151,8 @@ const GeneratedReceiptModal = () => { //FIXME - Insert props
           justifyContent='space-around'
           alignItems='baseline'
           textAlign="center"
-          mt={2}
         >
-          <Typography>
+          <Typography fontSize={12}>
             {company.adress.city + ", " + dateInFull()}
           </Typography>
 
@@ -154,7 +160,8 @@ const GeneratedReceiptModal = () => { //FIXME - Insert props
             {signatureSpace()}
             <Typography
               borderTop={1}
-              width={300}>
+              width={200}
+              fontSize={12}>
               {signature[props.signature] || "Assinatura"}
             </Typography>
           </Box>
@@ -164,16 +171,17 @@ const GeneratedReceiptModal = () => { //FIXME - Insert props
         spacing={2}
         direction='row'
         justifyContent='center'
+        mt={2}
       >
         <Button
           variant="contained"
-          onClick={() => console.log("GERAR NOVO")}
+          onClick={() => console.log("GERAR NOVO")} //FIXME - add generete new function
         >
           Gerar Novo
         </Button>
         <Button
           variant="contained"
-          onClick={() => console.log("IMPRIMIR")}
+          onClick={handlePrint}
         >
           Imprimir
         </Button>
