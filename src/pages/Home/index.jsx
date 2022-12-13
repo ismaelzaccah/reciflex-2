@@ -59,14 +59,13 @@ const Home = () => {
       sx={{
         flexWrap: 'wrap',
         '& > :not(style)': {
-          width: 800,
-          height: 660,
+          width: 700,
         },
       }}>
       <Paper
         elevation={8}
         sx={{ justifyContent: 'center' }}>
-        <ReciflexLogo />
+        <ReciflexLogo/>
 
         <Box m={2}>
           <Grid container spacing={2}>
@@ -100,7 +99,7 @@ const Home = () => {
                 fullWidth
                 required
                 multiline
-                rows={6} />
+                rows={5} />
             </Grid>
             <Grid item xs={12}>
               <Stack direction="row" justifyContent="space-between">
@@ -108,6 +107,7 @@ const Home = () => {
                   type="date"
                   id="date"
                   name="date"
+                  size="small"
                   value={formValues.date || ""}
                   onChange={handleChange}
                   label="Data"
@@ -168,7 +168,7 @@ const Home = () => {
               />
             </RadioGroup>
           </Grid>
-          <Grid item xs={12} mt={4}>
+          <Grid item xs={12} m={2}>
             <Stack spacing={2} direction="row" justifyContent="center">
               <Button variant='contained' type='reset'>Limpar Campos</Button>
               <Button variant='contained' type='submit'>Gerar Recibo</Button>

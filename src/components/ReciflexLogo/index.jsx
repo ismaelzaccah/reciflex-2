@@ -11,17 +11,17 @@ const ReciflexLogo = () => {
       color='inherit'
       draggable="false"
       target="_blank"
-      my={4}
+      my={2}
       mx="auto"
       width={380}
     >
       <Box sx={{ display: 'flex' }}>
-        <img src={logo} alt="Reciflex 2 logo" width={300} draggable="false" />
-        <Typography variant='subtitle1' sx={{ position: 'absolute', ml: 38 }}>
+        <img src={logo} alt="Reciflex 2 logo" width={200} draggable="false" />
+        <Typography fontSize={12} sx={{ position: 'absolute', ml: 26 }}>
           2.0
         </Typography>
       </Box>
-      <Typography variant='subtitle1'>Desenvolvido por Ismael Zaccah</Typography>
+      <Typography fontSize={14} variant='subtitle1'>Desenvolvido por Ismael Zaccah</Typography>
     </Link>
   )
 }
