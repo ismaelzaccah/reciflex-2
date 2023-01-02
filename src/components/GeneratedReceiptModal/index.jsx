@@ -1,13 +1,12 @@
 import { Box, Typography } from "@mui/material"
 import { Stack } from "@mui/system";
 import * as React from "react";
-import { useReactToPrint } from "react-to-print";
 import companyLogo from "../../assets/logo.png"
 import company from "../../config";
 import '../../utils/extenso'
 import SignatureImage from "../SignatureImage";
 
-const GeneratedReceiptModal = (props) => { //FIXME - Insert props
+const GeneratedReceiptModal = (props) => {
   const { companyName, cnpj, contact, adress, signature } = company;
  
   const dateInFull = () => {
