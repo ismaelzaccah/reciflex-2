@@ -1,6 +1,5 @@
-import { Box, Button, Typography } from "@mui/material"
+import { Box, Typography } from "@mui/material"
 import { Stack } from "@mui/system";
-import html2canvas from "html2canvas";
 import * as React from "react";
 import { useReactToPrint } from "react-to-print";
 import companyLogo from "../../assets/logo.png"
@@ -8,30 +7,9 @@ import company from "../../config";
 import '../../utils/extenso'
 import SignatureImage from "../SignatureImage";
 
-const style = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: 780,
-  bgcolor: 'background.paper',
-  boxShadow: 24,
-  pb: 2,
-}
-
-const GeneratedReceiptModal = () => { //FIXME - Insert props
+const GeneratedReceiptModal = (props) => { //FIXME - Insert props
   const { companyName, cnpj, contact, adress, signature } = company;
-
-  const props = { //FIXME - remove after insert props
-    clientName: "Ismael Zaccah da Silva Vieira",
-    receiptValue: "1123,58",
-    description: "serviços graficos e etc",
-    useTodayDate: true,
-    date: "2022-5-30",
-    includeCNPJ: true,
-    signature: "1",
-  }
-
+ 
   const dateInFull = () => {
     const monthInFull = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
     if (props.useTodayDate) {
@@ -49,32 +27,8 @@ const GeneratedReceiptModal = () => { //FIXME - Insert props
     return <Box width={170} height={70} />
   }
 
-  const contentToPrintRef = React.useRef();
-
-  const handleScreenshot = async () => {
-    const element = contentToPrintRef.current;
-    const canvas = await html2canvas(element, { scale: 2 });
-    const data = canvas.toDataURL('image/png');
-    const link = document.createElement('a');
-    if (typeof link.download === 'string') {
-      link.href = data;
-      link.download = `Recibo de R$ ${props.receiptValue} para ${props.clientName}.png`;
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-    } else {
-      window.open(data);
-    }
-  }
-
-  const handlePrint = useReactToPrint({
-    content: () => contentToPrintRef.current,
-  });
-
-
   return (
-    <Box sx={style}>
-      <Box py={2} px={4} ref={contentToPrintRef}>
+      <Box py={2} px={4}>
         <Typography
           variant="body2"
           textAlign='center'
@@ -97,7 +51,7 @@ const GeneratedReceiptModal = () => { //FIXME - Insert props
           />
           <Typography fontSize={12}>
             {companyName.toUpperCase() || "Nome da empresa não configurado"}
-            {" - "}
+            {props.includeCNPJ && cnpj && " - "}
             {props.includeCNPJ && (cnpj || " - CNPJ não configurado")}
             <br />
             {contact[1] || "Contato 1 não configurado"}
@@ -167,34 +121,6 @@ const GeneratedReceiptModal = () => { //FIXME - Insert props
           </Box>
         </Stack>
       </Box>
-      <Stack
-        spacing={2}
-        direction='row'
-        justifyContent='center'
-        mt={2}
-      >
-        <Button
-          variant="contained"
-          onClick={() => console.log("GERAR NOVO")} //FIXME - add generete new function
-        >
-          Gerar Novo
-        </Button>
-        <Button
-          variant="contained"
-          onClick={handlePrint}
-        >
-          Imprimir
-        </Button>
-        <Button
-          variant="contained"
-          onClick={handleScreenshot}
-        >
-          Capturar
-        </Button>
-
-      </Stack>
-
-    </Box>
   )
 }
 

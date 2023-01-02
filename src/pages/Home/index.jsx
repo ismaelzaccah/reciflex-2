@@ -5,6 +5,20 @@ import { Stack } from '@mui/system';
 import ReciflexLogo from '../../components/ReciflexLogo';
 import company from '../../config';
 import GeneratedReceipt from '../../components/GeneratedReceiptModal';
+import html2canvas from 'html2canvas';
+import { useReactToPrint } from 'react-to-print';
+
+
+const modalStyle = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 780,
+  bgcolor: 'background.paper',
+  boxShadow: 24,
+  pb: 2,
+}
 
 const Home = () => {
 
@@ -36,10 +50,9 @@ const Home = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     handleOpenGeneratedReceipt();
-    console.log(formValues);
   }
 
-  const hadleReset = (event) => {
+  const handleReset = (event) => {
     setFormValues({
       clientName: "",
       receiptValue: "",
@@ -50,12 +63,40 @@ const Home = () => {
       signature: "",
     });
   }
+
+  const contentToPrintRef = React.useRef();
+
+  const handleScreenshot = async () => {
+    const element = contentToPrintRef.current;
+    const canvas = await html2canvas(element, { scale: 2 });
+    const data = canvas.toDataURL('image/png');
+    const link = document.createElement('a');
+    if (typeof link.download === 'string') {
+      link.href = data;
+      link.download = `Recibo de R$ ${formValues.receiptValue} para ${formValues.clientName}.png`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    } else {
+      window.open(data);
+    }
+  }
+
+  const handlePrint = useReactToPrint({
+    content: () => contentToPrintRef.current,
+  });
+
+  const handleNewBlank = () => {
+    handleCloseGeneratedReceipt();
+    handleReset();
+  }
+
   return (
     <Box
       className="flex column-center App"
       component="form"
       onSubmit={handleSubmit}
-      onReset={hadleReset}
+      onReset={handleReset}
       sx={{
         flexWrap: 'wrap',
         '& > :not(style)': {
@@ -65,7 +106,7 @@ const Home = () => {
       <Paper
         elevation={8}
         sx={{ justifyContent: 'center' }}>
-        <ReciflexLogo/>
+        <ReciflexLogo />
 
         <Box m={2}>
           <Grid container spacing={2}>
@@ -113,6 +154,7 @@ const Home = () => {
                   label="Data"
                   InputLabelProps={{ shrink: true }}
                   disabled={formValues.useTodayDate === true}
+                  required
                 />
                 <FormControlLabel
                   control={
@@ -172,30 +214,54 @@ const Home = () => {
             <Stack spacing={2} direction="row" justifyContent="center">
               <Button variant='contained' type='reset'>Limpar Campos</Button>
               <Button variant='contained' type='submit'>Gerar Recibo</Button>
-
-              <Button //FIXME - Delete after make modal
-                variant='contained'
-                onClick={handleOpenGeneratedReceipt}
-              >
-                OPEN MODAL
-              </Button>
-
             </Stack>
           </Grid>
         </Box>
       </Paper>
-
       <Modal
         open={openGeneratedReceipt}
         onClose={handleCloseGeneratedReceipt}
       >
-        <Box>
-          <GeneratedReceipt />
+        <Box sx={modalStyle}>
+          <Box ref={contentToPrintRef}>
+            <GeneratedReceipt
+              clientName={formValues.clientName}
+              receiptValue={formValues.receiptValue}
+              description={formValues.description}
+              useTodayDate={formValues.useTodayDate}
+              date={formValues.date}
+              includeCNPJ={formValues.includeCNPJ}
+              signature={formValues.signature}
+            />
+          </Box>
+          <Stack
+            spacing={2}
+            direction='row'
+            justifyContent='center'
+            mt={2}
+          >
+            <Button
+              variant="contained"
+              onClick={handleNewBlank}
+            >
+              Gerar Novo
+            </Button>
+            <Button
+              variant="contained"
+              onClick={handlePrint}
+            >
+              Imprimir
+            </Button>
+            <Button
+              variant="contained"
+              onClick={handleScreenshot}
+            >
+              Capturar
+            </Button>
+          </Stack>
         </Box>
       </Modal>
-
     </Box>
-
   );
 }
 
