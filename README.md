@@ -1,9 +1,6 @@
 # Olá, bem-vindo ao Reciflex 2
 
 ## Sumário
-
-- [Olá, bem-vindo ao Reciflex 2](#olá-bem-vindo-ao-reciflex-2)
-  - [Sumário](#sumário)
   - [🍍 Problemática](#-problemática)
   - [📋 Requisistos](#-requisistos)
   - [👨‍💻 Tecnologias Utilizadas](#-tecnologias-utilizadas)
@@ -107,4 +104,11 @@ Escolha um computador ou servidor de arquivos para instalar, verifique se que te
 6. Com tudo conferido vamos Instalar:
     - No terminal rode o comando `npm run build` e aguarde terminar, isso vai criar os arquivos que vamos implementar a seguir;
     - Será gerada uma pasta chamada `build` na raiz do diretório, ela é nosso projeto compilado e pronto para rodar, copie essa pasta para o local que desejar;
-    - Abra um terminal e navegue até a pasta `build` e rode o comando `serve`, deve a 
+    - Abra um terminal e navegue até a pasta `build` e rode o comando `serve`, se tudo correr bem deve aparecer algo assim:
+
+    ![Exemplo Servidor Funcionando](serve.example.jpg)
+
+    - Para usar basta ir no navegar dos computadores da rede local e seguir com o endereço de Network, caso não seja possivel usar um ip fixo na maquina que está rodando a aplicação você também pode acessar usando o hostname do PC seguido da porta: `http://SERVIDOR-DE-ARQUIVOS:3000`;
+    - Paca encerrar o serviço aperte `ctrl + C`.
+    
+    >Caso o servidor não fique ligado 24h vc pode usar o Agendador de Tarefas do windows para configurar a rotina de iniciar o serviço ao ligar a maquina. 
