@@ -1,6 +1,7 @@
 import { Box } from '@mui/system';
 import { Link, Typography } from '@mui/material';
 import logo from '../../assets/reciflex-logo.png';
+import company from '../../config';
 
 const ReciflexLogo = () => {
   return (
@@ -18,7 +19,7 @@ const ReciflexLogo = () => {
       <Box sx={{ display: 'flex' }}>
         <img src={logo} alt="Reciflex 2 logo" width={200} draggable="false" />
         <Typography fontSize={12} sx={{ position: 'absolute', ml: 26 }}>
-          2.0
+          {company.appVersion}
         </Typography>
       </Box>
       <Typography fontSize={14} variant='subtitle1'>Desenvolvido por Ismael Zaccah</Typography>

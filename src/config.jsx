@@ -21,6 +21,7 @@ const company = {
     2: process.env.REACT_APP_SIGNATURE_2_OWNER,
     3: process.env.REACT_APP_SIGNATURE_3_OWNER,
     4: process.env.REACT_APP_SIGNATURE_4_OWNER,
-  }
+  },
+  appVersion: 2.1
 }
 export default company;

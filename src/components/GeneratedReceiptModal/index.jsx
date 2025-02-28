@@ -33,7 +33,7 @@ const GeneratedReceiptModal = (props) => {
           textAlign='center'
           fontSize={8}
         >
-          Documento Gerado pelo Reciflex 2.0 - Desenvolvido por Ismael Zaccah
+          Documento Gerado pelo Reciflex {company.appVersion} - Desenvolvido por Ismael Zaccah
         </Typography>
 
         <Stack

@@ -1,6 +1,6 @@
 import './index.css';
 import * as React from 'react';
-import { Box, Paper, TextField, Grid, FormControlLabel, Switch, Button, Divider, RadioGroup, Radio, Modal } from '@mui/material';
+import { Box, Paper, TextField, Grid, FormControlLabel, Switch, Button, Divider, Snackbar, RadioGroup, Radio, Modal } from '@mui/material';
 import { Stack } from '@mui/system';
 import ReciflexLogo from '../../components/ReciflexLogo';
 import company from '../../config';
@@ -71,15 +71,25 @@ const Home = () => {
     const canvas = await html2canvas(element, { scale: 2 });
     const data = canvas.toDataURL('image/png');
     const link = document.createElement('a');
-    if (typeof link.download === 'string') {
-      link.href = data;
-      link.download = `Recibo de R$ ${formValues.receiptValue} para ${formValues.clientName}.png`;
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-    } else {
-      window.open(data);
-    }
+    link.href = data;
+    link.download = `Recibo de R$ ${formValues.receiptValue} para ${formValues.clientName}.png`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  }
+
+  const handleClipboard = async () => {
+    const element = contentToPrintRef.current;
+    const canvas = await html2canvas(element, { scale: 2 });
+    const data = canvas.toDataURL('image/png');
+    const response = await fetch(data);
+    const blob = await response.blob();
+    await navigator.clipboard.write([
+      new ClipboardItem({
+        [blob.type]: blob
+      })
+    ]);
+    return ("acordeon")
   }
 
   const handlePrint = useReactToPrint({
@@ -255,6 +265,12 @@ const Home = () => {
             <Button
               variant="contained"
               onClick={handleScreenshot}
+            >
+              Salvar
+            </Button>
+            <Button
+              variant="contained"
+              onClick={handleClipboard}
             >
               Capturar
             </Button>
